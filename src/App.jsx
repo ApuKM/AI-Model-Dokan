@@ -15,6 +15,8 @@ const App = () => {
   const [modelsPromise] = useState(() => fetchModels());
   const [cartModels, setCartModels] = useState([]);
   const [tab, setTab] = useState("models");
+
+  const total = cartModels.reduce((sum, item) => sum + item.price, 0);
   // console.log(cartModels)
   return (
     <>
@@ -40,8 +42,20 @@ const App = () => {
         {tab === "cart" && (
           <div className="flex flex-col gap-3">
             {cartModels.map((cartModel) => (
-              <Cart cartModel={cartModel} key={cartModel.id} />
+              <Cart
+                cartModel={cartModel}
+                cartModels={cartModels}
+                setCartModels={setCartModels}
+                key={cartModel.id}
+              />
             ))}
+          </div>
+        )}
+
+        {tab === "cart" && (
+          <div className="flex items-center justify-between p-4 bg-zinc-800 rounded-md my-10 text-white">
+            <h4 className="text-2xl ">Total</h4>
+            <p className="text-2xl">${total}</p>
           </div>
         )}
       </section>
